@@ -51,7 +51,14 @@ runs:
         cache-dependency-path: |
           **/pnpm-lock.yaml
           **/yarn.lock
+          **/package-lock.json
           patches/**
+
+    - name: npm install
+      shell: bash
+      if: inputs.packageManager == 'npm'
+      run: npm install --frozen-lockfile --no-audit
+      working-directory: ${{ inputs.workingDirectory }}
 
     - name: yarn install
       shell: bash
